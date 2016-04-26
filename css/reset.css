@@ -1,0 +1,9 @@
+*{margin:0;
+ padding:0;}
+ body{
+	font-size: 62.5%;
+	font-family: Arial;
+}
+ul, ol { list-style:none; }
+a { text-decoration:none; }
+a:hover { text-decoration:none;}
