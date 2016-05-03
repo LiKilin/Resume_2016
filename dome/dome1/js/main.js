@@ -35,7 +35,12 @@ function insertAfter(newElement,targetElement){
 addLoadEvent(highlightPage);
 addLoadEvent(prepareElement);
 addLoadEvent(clickNav);
-
+addLoadEvent(prepareTheRom);
+addLoadEvent(getTheUrl);
+addLoadEvent(displayAbbreviations);
+addLoadEvent(stipeTable);
+addLoadEvent(focusLabels);
+addLoadEvent(prepareForm);
 
 function highlightPage(){
 	var headers = document.getElementsByTagName("header");
@@ -174,6 +179,141 @@ function clickNav(){
 }
 //对skills.html函数创建完毕。
 
+
+//对ability.html创建函数。
+function prepareTheRom(){
+    if(!document.getElementById("ability")) return false;
+    var h3 = document.createElement("h3");
+    h3.style.margin = " 20px 20px";
+    var h3text = document.createTextNode("J选择图片：")
+    h3.appendChild(h3text);
+    var image = document.createElement("img");
+    image.src = "images/photo_bg.gif";
+    image.alt = "here are the images.";
+    image.id = "picroom"
+    image.style.border = "1px solid #999";
+    var introduce = document.createElement("p");
+    introduce.id = "introduce";
+    var text = document.createTextNode(" ");
+    introduce.appendChild(text);
+    var article = document.getElementsByTagName("article");
+    article[0].appendChild(h3);
+    article[0].appendChild(image);
+    article[0].appendChild(introduce);
+}
+
+function getTheUrl () {
+    if(!document.getElementById("ability")) return false;
+    var nav = document.getElementsByTagName("ul");
+    var links = nav[1].getElementsByTagName("a");
+    for(var i = 0;i < links.length;i++){
+	   links[i].onclick = function (){
+		  var url = this.href;
+		  var alt = this.firstChild.alt;
+		  showThePic(url,alt);
+		  return false;
+	   }
+    }
+}
+function showThePic (url,text){
+    var picPlace = document.getElementById("picroom");
+    picPlace.src = url;
+    var introduce = document.getElementById("introduce");
+    introduce.firstChild.nodeValue = text;
+}
+//ability.html创建完毕。
+
+
+
+ //list.html的函数。
+function displayAbbreviations (){
+    if(!document.getElementById("list")){return false;}
+    var abbrs = document.getElementsByTagName("abbr");
+    var arr = new Array();
+    for (var i = 0; i < abbrs.length; i++){
+	   if(!abbrs[i].title) continue;
+	   var key = abbrs[i].firstChild.nodeValue;
+	   var description = abbrs[i].title;
+	   arr[key] = description;
+    }
+    var dlist = document.createElement("dl");
+    for(key in arr){
+	   var dtitle = document.createElement("dt");
+	   var dttext = document.createTextNode(key);
+	   var dd = document.createElement("dd");
+	   var ddtext = document.createTextNode(arr[key]);
+	   dtitle.appendChild(dttext);
+	   dd.appendChild(ddtext);
+	   dlist.appendChild(dtitle);
+	   dlist.appendChild(dd);
+    }
+    var article = document.getElementsByTagName("article");
+    article[0].appendChild(dlist);
+}
+
+function stipeTable (){
+    if(!document.getElementById("list")){return false;}
+    var tables = document.getElementsByTagName("table");
+    var rows = tables[0].getElementsByTagName("tr");
+    var add = false;
+    for(var i = 1; i < rows.length;i++){
+	   addClass(rows[i],"hover");
+	   if(add == true){
+		  addClass(rows[i],"new");
+		  add = false;
+	   }else{
+		  addClass(rows[i],"old");
+		  add = true;
+	   }
+    }
+}
+//list.html函数创建完毕。
+
+//开始对contact.html创建函数。
+//让不支持label跳转的浏览器支持。
+ function focusLabels() {
+	if (!document.getElementById("contact")) {return false;}
+	var labels = document.getElementsByTagName("label");
+	for (var i = 0; i < labels.length; i++) {
+	    if (!labels[i].getAttribute("for")) continue;
+	    lables[i].onclick = function () {
+		   var elemId = this.getAttribute("for");
+		   if (!document.getElementById(elemId)) return false;
+		   var element = document.getElementById(elemId);
+		   element.focus();
+	    }
+	}
+ }
+//让不支持palceholder的浏览器支持文本占位符。
+ function resetFields(whichform) {
+ 	if(Modernizr.input.placeholder) {return;}
+ 	for(var i=0;i<whichform.elements.length;i++){
+ 		var element = whichform.elements[i];
+ 		if(elements.type == "submit"){continue;}
+ 		if(!elements.getAttribute("placeholder")){continue;}
+ 		element.onfocus = function(){
+ 			if(this.value == this.getAttribute("")){
+ 				this.value = "";
+ 			}
+ 		}
+ 		element.onblur =function(){
+ 			if(this.value == ""){
+ 				this.value = this.getAttribute("");
+ 			}
+ 		}
+ 		element.onblur();
+ 	}
+ }
+ function prepareForm() {
+	if (!document.getElementById("")) {
+	    return false;
+	}
+	for (var i = 0; i < document.forms.length; i++) {
+	    var form = document.forms[i];
+	    resetFields(form);
+	}
+ }
+//结束
 
 
 
